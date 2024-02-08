@@ -19,8 +19,8 @@
             <li class="nav-item">
                 <a href="{{ route('product.index') }}" class="nav-link {{ Request::is('product') ? 'active' : '' }}"><i class="fas fa-gift"></i><span>Product</span></a>
             </li>
-            {{-- <li class="nav-item">
+            <li class="nav-item">
                 <a href="{{ route('order.index') }}" class="nav-link {{ Request::is('order') ? 'active' : '' }}"><i class="fas fa-shopping-cart"></i><span>Orders</span></a>
-            </li> --}}
+            </li>
     </aside>
 </div>
