@@ -16,6 +16,12 @@ class ProductController extends Controller
         $products = Product::when($request->category_id, function ($query) use ($request) {
             return $query->where('category_id', $request->category_id);
         })
+            ->when($request->id, function ($query) use ($request) {
+                return $query->where('id',  $request->id);
+            })
+            ->when($request->name, function ($query) use ($request) {
+                return $query->where('name', 'like', '%' .  $request->name . '%');
+            })
             ->paginate(10);
         return response()->json([
             'message' => 'Success',
