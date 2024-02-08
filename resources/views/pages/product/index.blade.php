@@ -16,8 +16,8 @@
                     <a href="{{ route('product.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Product</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('product.index') }}">Product</a></div>
                     <div class="breadcrumb-item">All Product</div>
                 </div>
             </div>
@@ -55,24 +55,27 @@
 
                                             <th>Name</th>
                                             <th>Category</th>
-                                            <th>Price</th>
-                                            <th>Stock</th>
-                                            <th>Created At</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Price</th>
+                                            <th class="text-right">Stock</th>
+                                            <th>Photo</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                         @foreach ($products as $product)
                                             <tr>
-
                                                 <td>{{ $product->name }}
                                                 </td>
                                                 <td>{{ $product->category->name }}
                                                 </td>
-                                                <td>{{ $product->price }}
+                                                <td class="text-right"> {{ number_format($product->price) }}</td>
+                                                <td class="text-right"> {{ number_format($product->stock) }}</td>
+                                                <td>
+                                                    @if ($product->image)
+                                                    <img src="{{ asset('storage/products/'.$product->image) }}" alt=""
+                                                    width="100px" class="img-thumbnail">
+                                                    @else
+                                                    <span class="badge badge-danger">No Image</span>
+                                                    @endif
                                                 </td>
-                                                <td>{{ $product->stock }}
-                                                </td>
-
-                                                <td>{{ $product->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('product.edit', $product->id) }}'
