@@ -2,64 +2,73 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function order(Request $request)
     {
-        //
-    }
+        // validate the request
+        $request->validate([
+            'address_id' => 'required',
+            'payment_method' => 'required',
+            'shipping_service' => 'required',
+            'shipping_cost' => 'required',
+            'total_cost' => 'required',
+            'items' => 'required',
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $subtotal = 0;
+        foreach ($request->items as $item) {
+            //get product price
+            $product = Product::find($item['product_id']);
+            $subtotal += $product->price * $item['quantity'];
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // create order
+        $order = Order::create([
+            'user_id' => $request->user()->id,
+            'address_id' => $request->address_id,
+            'subtotal' => $subtotal,
+            'shipping_cost' => $request->shipping_cost,
+            'total_cost' => $subtotal + $request->shipping_cost,
+            'status' => 'pending',
+            'payment_method' => $request->payment_method,
+            'shipping_service' => $request->shipping_service,
+            'transaction_number' => 'TRX' . rand(100000, 999999),
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        //if payment_va_name and payment_va_number is not null
+        if ($request->payment_va_name) {
+            $order->update([
+                'payment_va_name' => $request->payment_va_name,
+            ]);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // create order items
+        foreach ($request->items as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+            ]);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // request ke midtrans
+        // $midtrans = new CreateVAService($order->load('user', 'orderItems'));
+        // $apiResponse = $midtrans->getVA();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // $order->payment_va_number = $apiResponse->va_numbers[0]->va_number;
+        $order->save();
+
+        // return response
+        return response()->json([
+            'message' => 'Order created successfully',
+            'order' => $order,
+        ]);
     }
 }
