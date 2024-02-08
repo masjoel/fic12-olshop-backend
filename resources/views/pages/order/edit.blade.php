@@ -16,9 +16,17 @@
     <div class="main-content">
         <section class="section">
 
+            <div class="section-header">
+                <h1>Order</h1>
 
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('order.index') }}">Order</a></div>
+                    <div class="breadcrumb-item">All Order</div>
+                </div>
+            </div>
             <div class="section-body">
-                <h2 class="section-title">Order </h2>
+                {{-- <h2 class="section-title">Order </h2> --}}
 
 
 
