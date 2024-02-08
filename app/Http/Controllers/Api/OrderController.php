@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Midtrans\CreateVAService;
 
 class OrderController extends Controller
 {
@@ -59,10 +60,10 @@ class OrderController extends Controller
         }
 
         // request ke midtrans
-        // $midtrans = new CreateVAService($order->load('user', 'orderItems'));
-        // $apiResponse = $midtrans->getVA();
+        $midtrans = new CreateVAService($order->load('user', 'orderItems'));
+        $apiResponse = $midtrans->getVA();
 
-        // $order->payment_va_number = $apiResponse->va_numbers[0]->va_number;
+        $order->payment_va_number = $apiResponse->va_numbers[0]->va_number;
         $order->save();
 
         // return response
