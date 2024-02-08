@@ -15,10 +15,8 @@
 @section('main')
     <div class="main-content">
         <section class="section">
-
             <div class="section-header">
                 <h1>Order</h1>
-
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="{{ route('order.index') }}">Order</a></div>
@@ -26,18 +24,11 @@
                 </div>
             </div>
             <div class="section-body">
-                {{-- <h2 class="section-title">Order </h2> --}}
-
-
-
                 <div class="card">
                     <form action="{{ route('order.update', $order->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-
                         <div class="card-body">
-
-
                             <div class="form-group">
                                 <label class="form-label">Status</label>
                                 <select class="form-control selectric @error('status') is-invalid @enderror" name="status">
@@ -52,13 +43,8 @@
                                     </option>
                                     <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Failed
                                     </option>
-
-
-
                                 </select>
                             </div>
-
-                            {{-- text no resi --}}
                             <div class="form-group">
                                 <label>No Resi</label>
                                 <input type="text"

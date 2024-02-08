@@ -47,19 +47,19 @@
                                             <th>Transaction Date</th>
                                             <th>Total</th>
                                             <th>Status</th>
+                                            <th>Payment VA</th>
                                             <th>Shipping Name</th>
+                                            <th>Shipping Receipt</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>{{ $order->created_at }}</td>
-                                                </td>
-                                                <td>{{ $order->total_cost }}</td>
-                                                </td>
+                                                <td>{{ number_format($order->total_cost) }}</td>
                                                 <td>{{ $order->status }}</td>
-                                                </td>
+                                                <td>{{ $order->payment_va_name }}</td>
                                                 <td>{{ $order->shipping_service }}</td>
-                                                </td>
+                                                <td>{{ $order->shipping_resi }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('order.edit', $order->id) }}'
