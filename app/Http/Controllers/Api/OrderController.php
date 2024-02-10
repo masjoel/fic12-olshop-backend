@@ -72,4 +72,14 @@ class OrderController extends Controller
             'order' => $order,
         ]);
     }
+
+    // function for check status order
+    public function checkStatus($id)
+    {
+        $orders = Order::find($id);
+        return response()->json([
+            'status' => $orders->status
+        ]);
+    }
+
 }

@@ -30,4 +30,5 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::apiResource('addresses', AddressController::class)->middleware('auth:sanctum');
 Route::post('/order', [OrderController::class, 'order'])->middleware('auth:sanctum');
+Route::get('/order/status/{id}', [OrderController::class, 'checkStatus'])->middleware('auth:sanctum');
 Route::post('/callback', [CallbackController::class, 'callback']);
