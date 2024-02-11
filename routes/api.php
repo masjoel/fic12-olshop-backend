@@ -32,3 +32,6 @@ Route::apiResource('addresses', AddressController::class)->middleware('auth:sanc
 Route::post('/order', [OrderController::class, 'order'])->middleware('auth:sanctum');
 Route::get('/order/status/{id}', [OrderController::class, 'checkStatus'])->middleware('auth:sanctum');
 Route::post('/callback', [CallbackController::class, 'callback']);
+Route::post('/update-fcm', [AuthController::class, 'updateFcmId'])->middleware('auth:sanctum');
+Route::get('/orders', [OrderController::class, 'getOrderByUser'])->middleware('auth:sanctum');
+Route::get('/order/{id}', [OrderController::class, 'getOrderById'])->middleware('auth:sanctum');
