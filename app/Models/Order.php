@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -18,5 +18,10 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }
